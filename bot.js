@@ -127,7 +127,7 @@ if(message.content.startsWith(prefix + " start")) {
                        .setTimestamp()
                      m.edit('** 🎉 GIVEAWAY ENDED 🎉**' , {embed: endEmbed});
                     message.guild.channels.find("name" , room).send(`**Congratulations ${gFilter}! You won The \`${title}\` Check your DMs 👌**` , {embed: {}})
-                    gFilter.send(`**Congratulations! You won The \`${title}\` \`${present}\`**` , {embed: {}})
+                    gFilter.send(`**Congratulations! You won The \`${title}\` Info: \`${present}\`**` , {embed: {}})
                   
                 }, ms(duration));
             });
