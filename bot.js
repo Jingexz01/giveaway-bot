@@ -188,6 +188,27 @@ if(message.content.startsWith(prefix + " start")) {
 })
 };
 
+client.on("message", (message) => {
+ 
+// Also good practice to ignore any message that does not start with our prefix, 
+  // which is set in the configuration file.
+  if(message.content.indexOf(prefix) !== 0) return;
+  
+  // Here we separate our "command" name, and our "arguments" for the command. 
+  // e.g. if we have the message "+say Is this the real life?" , we'll get the following:
+  // command = say
+  // args = ["Is", "this", "the", "real", "life?"]
+  const args = message.content.slice(prefix.length).trim().split(/ +/g);
+  const command = args.shift().toLowerCase();
+ 
+if (command === " invite") {
+ const invite = new Discord.RichEmbed()
+    invite.setTitle("Bot Invite")
+    invite.setDescription("Invite me to your server here")
+    invite.addField("Invite Link", "[Click Here](https://discordapp.com/api/oauth2/authorize?client_id=653755293943201793&permissions=2147483127&scope=bot)")
+    message.channel.send(invite);
+  }
+
 });
 
 // THE CLIENT LOGIN PROCESS (BOT READS THE TOKEN FROM HERE)
