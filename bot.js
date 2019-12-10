@@ -100,7 +100,7 @@ if(message.content.startsWith(prefix + " start")) {
           }).then(collected => {
             title = collected.first().content
             collected.first().delete();
-            msg.channel.send(':eight_pointed_black_star:| **Now send The Present **').then(msg => {
+            msg.edit(':eight_pointed_black_star:| **Now send The Present **').then(msg => {
               message.channel.awaitMessages(filter, {
                 max: 1,
                 time: 20000,
