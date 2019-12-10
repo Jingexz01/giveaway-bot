@@ -141,7 +141,8 @@ if(message.content.startsWith(prefix + " start")) {
         });
       });
     });
-  }   
+  });
+}   
 });
 
 // THE CLIENT LOGIN PROCESS (BOT READS THE TOKEN FROM HERE)
