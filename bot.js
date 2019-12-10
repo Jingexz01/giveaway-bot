@@ -32,9 +32,9 @@ const moment = require('moment'); //npm i moment
 const ms = require('ms') //npm i ms
 
   var time = moment().format('Do MMMM YYYY , hh:mm');
-  var room;
-  var title;
-  var duration;
+  var room = "";
+  var title = "";
+  var duration = "";
   var currentTime = new Date(),
 hours = currentTime.getHours() + 3 ,
 minutes = currentTime.getMinutes(),
