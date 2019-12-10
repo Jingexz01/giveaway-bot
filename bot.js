@@ -3,24 +3,6 @@
 const Discord = require("discord.js");
 const PREFIX = process.env.PREFIX;
 const client = new Discord.Client();
-const antispam = require("discord-anti-spam");
-const discordantispam = new antispam({
-  warnThreshold: 4, // Amount of messages sent in a row that will cause a warning.
-  banThreshold: 7, // Amount of messages sent in a row that will cause a ban
-  maxInterval: 5000, // Amount of time (in ms) in which messages are cosidered spam.
-  warnMessage: "{@user}, Keep spamming in this server and I will dead your ass hoe", // Message will be sent in chat upon warning.
-  banMessage: "**{user_tag}** has been banned for spamming.", // Message will be sent in chat upon banning.
-  maxDuplicatesWarning: 7, // Amount of same messages sent that will be considered as duplicates that will cause a warning.
-  maxDuplicatesBan: 15, // Amount of same messages sent that will be considered as duplicates that will cause a ban.
-  deleteMessagesAfterBanForPastDays: 1, // Amount of days in which old messages will be deleted. (1-7)
-  exemptPermissions: ["MANAGE_MESSAGES", "ADMINISTRATOR", "MANAGE_GUILD", "BAN_MEMBERS"], // Bypass users with at least one of these permissions
-  ignoreBots: false, // Ignore bot messages
-  verbose: false, // Extended Logs from module
-  ignoredUsers: [], // Array of string user IDs that are ignored
-  ignoredRoles: [], // Array of string role IDs or role name that are ignored
-  ignoredGuilds: [], // Array of string Guild IDs that are ignored
-  ignoredChannels: [] // Array of string channels IDs that are ignored
-});
 
 // BELOW THIS LINE IS THE CLEAN FUNCTION DO NOT TOUCH THIS UNLESS YOU KNOW WHAT YOU ARE DOING!!!
 // FUNCTIONS ARE REQUIRED TO EXECUTE ARGS AND STRINGS 
@@ -40,94 +22,100 @@ var embedColor = require('./config');
 // BELOW THIS LINE IS THE BOTS CONSOLE LOG READY MESSAGE, PLAY STATUS (NOW STREAMING) AND THE MESSAGE THAT IS SENT WHEN INVITED TO A NEW SERVER!!!
 // YOU CAN CHANGE, DELETE OR EDIT THIS AS YOU WOULD LIKE BUT IT DOES GIVE THE BOT A NICE CLEAN LOOK 
 client.on("ready", () => {
-  console.log("ツ The Watchers ツ | Logged in! Server count: ${client.guilds.size}");
-  client.user.setGame(`Ninja Gen`, `https://www.twitch.tv/monstercat`);
+  console.log("Giveaways | Logged in! Server count: ${client.guilds.size}");
+  client.user.setGame(`Giveaways | -g help`, `https://www.twitch.tv/monstercat`);
 });
 
-const serverStats = {
-  guildID: '648353322452910080',
-  totalUsersID: '652417178095845376',
-  memberCountID: '652417207577477152',
-  botCountID: '652417305304760330'
+client.on('message',async message => {
+    
+const moment = require('moment'); //npm i moment
+const ms = require('ms') //npm i ms
+
+  var time = moment().format('Do MMMM YYYY , hh:mm');
+  var room;
+  var title;
+  var duration;
+  var currentTime = new Date(),
+hours = currentTime.getHours() + 3 ,
+minutes = currentTime.getMinutes(),
+done = currentTime.getMinutes() + duration,
+seconds = currentTime.getSeconds();
+if (minutes < 10) {
+minutes = "0" + minutes;
 }
-
-client.on("guildCreate", guild => {
-
-const owner = client.users.get("510065483693817867");
-
-const dmLog = new Discord.RichEmbed()
-    .setTitle("Decoy Invites")
-    .setColor("0xff0000")
-    .setDescription("I have been invited to" + ` ${guild.name}` + `(${guild.id})`)
-    .setFooter("© Ninja Gen")
-  owner.send(dmLog)
-});
-
+var suffix = "AM";
+if (hours >= 12) {
+suffix = "PM";
+hours = hours - 12;
+}
+if (hours == 0) {
+hours = 12;
+}
  
-client.on('guildMemberAdd', member => {
-  if (member.guild.id !== serverStats.guildID) return;
-  client.channels.get(serverStats.totalUsersID).setName(`Total: ${member.guild.memberCount}`);
-  client.channels.get(serverStats.memberCountID).setName(`Users: ${member.guild.members.filter(m => !m.user.bot).size}`);
-  client.channels.get(serverStats.botCountID).setName(`Bots: ${member.guild.members.filter(m => m.user.bot).size}`);
-});
-
-client.on('guildMemberRemove', member => {
-  if (member.guild.id !== serverStats.guildID) return;
-  client.channels.get(serverStats.totalUsersID).setName(`Total: ${member.guild.memberCount}`);
-  client.channels.get(serverStats.memberCountID).setName(`Users: ${member.guild.members.filter(m => !m.user.bot).size}`);
-  client.channels.get(serverStats.botCountID).setName(`Bots: ${member.guild.members.filter(m => m.user.bot).size}`);
-});
-
-client.on('message', (message) => { //whenever a message is sent
-  if (message.content.includes('discord.gg/'||'discordapp.com/invite/')) { //if it contains an invite link
-  if (message.member.hasPermission("ADMINISTRATOR")) return;
-    message.delete() //delete the message
-      .then(message.channel.send('Link Deleted:\n**Invite links are not permitted on this server**'))
-  }
-})
-
-client.on('message', (message) => { //whenever a message is sent
-  if (message.content.includes('youtu.be'||'youtube.com')) { //if it contains an invite link
-  if (message.member.hasPermission("ADMINISTRATOR")) return;
-    message.delete() //delete the message
-      .then(message.channel.send('Link Deleted:\n**Youtube/Self Advertisement links are not permitted on this server**'))
-  }
-})
-
-client.on('message', (message) => { //whenever a message is sent
-  if (message.content.includes('Nigger'||'Niggar' || 'nigger' || 'niggar')) { //if it contains an invite link
-  if (message.member.hasPermission("ADMINISTRATOR")) return;
-    message.delete() //delete the message
-      .then(message.channel.send('Message Deleted:\n**Racism is not permitted on this server**'))
-  }
-})
-
-/*client.on('message', (message) => {
-
-	if (message.channel.type.toLowerCase() == 'dm' || message.channel.type.toLowerCase() == 'group' && message.member.hasPermission("MANAGE_MEMBERS")) {
-		var embed = new Discord.RichEmbed()
-			.setAuthor(message.author.username, message.author.avatarURL)
-			.setDescription(message.content)
-			.setTimestamp(new Date())
-			.setColor('#C735D4');
-	}
-	if (message.author.id == 377898758870007810 || message.author.id == 431893326892105758 || message.author.id == 462577497666617344) return;
-	if (message.author.bot) return;
+  var filter = m => m.author.id === message.author.id;
+  if(message.content.startsWith(prefix + " start")) {
  
-	if (message.content.includes(`<@510065483693817867>`)) {
-                message.delete().catch()
-		message.reply("My owner is currently busy Developing Ninja Gen, Sleeping or Enjoying his life, he will get back to you as soon as possible !").then(msg => {msg.delete(23000)});
-		let ownerEmbed = new Discord.RichEmbed()
-			.setTitle("Mention Detected")
-			.setColor("#FF00FF")
-			.addField("Username:", `${message.author.username}#${message.author.discriminator}`, true)
-			.addField("User's ID:", message.author.id, true)
-			.addBlankField(true)
-			.addField("Server:", message.guild.name, true)
-			.setTimestamp()
-		client.users.get("510065483693817867").send(ownerEmbed);
-	}
-});*/
+    if(!message.guild.member(message.author).hasPermission('MANAGE_GUILD')) return message.channel.send(':heavy_multiplication_x:| **يجب أن يكون لديك خاصية التعديل على السيرفر**');
+    message.channel.send(`:eight_pointed_black_star:| **Send Name channel For the Giveaway**`).then(msg => {
+      message.channel.awaitMessages(filter, {
+        max: 1,
+        time: 20000,
+        errors: ['time']
+      }).then(collected => {
+        let room = message.guild.channels.find('name' , collected.first().content);
+        if(!room) return message.channel.send(':heavy_multiplication_x:| **i Found It :(**');
+        room = collected.first().content;
+        collected.first().delete();
+        msg.edit(':eight_pointed_black_star:| **Time For The Giveaway**').then(msg => {
+          message.channel.awaitMessages(filter, {
+            max: 1,
+            time: 20000,
+            errors: ['time']
+          }).then(collected => {
+            if(!collected.first().content.match(/[1-60][s,m,h,d,w]/g)) return message.channel.send('**The Bot Not Support This Time**');
+            duration = collected.first().content
+            collected.first().delete();
+            msg.edit(':eight_pointed_black_star:| **Now send The Present **').then(msg => {
+              message.channel.awaitMessages(filter, {
+                max: 1,
+                time: 20000,
+                errors: ['time']
+              }).then(collected => {
+                title = collected.first().content;
+                collected.first().delete();
+                msg.delete();
+                message.delete();
+                try {
+                  let giveEmbed = new Discord.RichEmbed()
+                  .setDescription(`**${title}** \nReact With 🎉 To Enter! \nTime remaining : ${duration} \n **Created at :** ${hours}:${minutes}:${seconds} ${suffix}`)
+                  .setFooter(message.author.username, message.author.avatarURL);
+                  message.guild.channels.find("name" , room).send(' :heavy_check_mark: **Giveaway Created** :heavy_check_mark:' , {embed: giveEmbed}).then(m => {
+                     let re = m.react('🎉');
+                     setTimeout(() => {
+                       let users = m.reactions.get("🎉").users
+                       let list = users.array().filter(u => u.id !== m.author.id !== client.user.id);
+                       let gFilter = list[Math.floor(Math.random() * list.length) + 0]
+                       let endEmbed = new Discord.RichEmbed()
+                       .setAuthor(message.author.username, message.author.avatarURL)
+                       .setTitle(title)
+                       .addField('Giveaway Ended !🎉',`Winners : ${gFilter} \nEnded at :`)
+                       .setTimestamp()
+                     m.edit('** 🎉 GIVEAWAY ENDED 🎉**' , {embed: endEmbed});
+                    message.guild.channels.find("name" , room).send(`**Congratulations ${gFilter}! You won The \`${title}\`**` , {embed: {}})
+                }, ms(duration));
+            });
+                } catch(e) {
+                message.channel.send(`:heavy_multiplication_x:| **i Don't Have Prem**`);
+                  console.log(e);
+                }
+              });
+            });
+          });
+        });
+      });
+    });
+  }
+});
 
 client.on("message", (message) => {
 
@@ -187,10 +175,6 @@ if (command === "say") {
     sayEmbed.setDescription(`${sayMessage}`)
     message.channel.send(sayEmbed);
   }
- 
-client.on("message", (msg) => {
-  discordantidpam.message(msg);
-});
    
 });
 
