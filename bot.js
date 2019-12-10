@@ -23,7 +23,7 @@ var embedColor = require('./config');
 // YOU CAN CHANGE, DELETE OR EDIT THIS AS YOU WOULD LIKE BUT IT DOES GIVE THE BOT A NICE CLEAN LOOK 
 client.on("ready", () => {
   console.log("Giveaways | Logged in! Server count: ${client.guilds.size}");
-  client.user.setGame(`Giveaways | -g help`, `https://www.twitch.tv/monstercat`);
+  client.user.setGame(`Giveaways | -g start`, `https://www.twitch.tv/monstercat`);
 });
 
 client.on('message',async message => {
@@ -123,7 +123,7 @@ if(message.content.startsWith(prefix + " start")) {
                        let endEmbed = new Discord.RichEmbed()
                        .setAuthor(message.author.username, message.author.avatarURL)
                        .setTitle(title)
-                       .addField('Giveaway Ended !🎉',`Winners : ${gFilter} \nEnded at :`)
+                       .addField('Giveaway Ended !🎉',`Winners : ${gFilter} \nEnded at : ${hours}:${minutes}:${seconds} ${suffix}`)
                        .setTimestamp()
                      m.edit('** 🎉 GIVEAWAY ENDED 🎉**' , {embed: endEmbed});
                     message.guild.channels.find("name" , room).send(`**Congratulations ${gFilter}! You won The \`${title}\` Check your DMs 👌**` , {embed: {}})
