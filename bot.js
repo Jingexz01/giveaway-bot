@@ -207,8 +207,8 @@ if (command === " invite") {
     invite.setDescription("Invite me to your server here")
     invite.addField("Invite Link", "[Click Here](https://discordapp.com/api/oauth2/authorize?client_id=653755293943201793&permissions=2147483127&scope=bot)")
     message.channel.send(invite);
-  };
-}
+  }
+})
 
 });
 
