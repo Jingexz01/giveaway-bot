@@ -34,6 +34,7 @@ const ms = require('ms') //npm i ms
   var time = moment().format('Do MMMM YYYY , hh:mm');
   var room = "";
   var title = "";
+  var present = "";
   var duration = "";
   var currentTime = new Date(),
 hours = currentTime.getHours() + 3 ,
@@ -72,17 +73,17 @@ if(message.content.startsWith(prefix + " start")) {
 // BELOW THIS LINE IS THE BOTS COMMANDS EDIT, REPLACE AND ADD TO THESE AS NEEDED IF YOU ARE WANTING TO EMBED THE COMMAND YOU CAN USE ONE OF THE BOTS PRE EXISTING COMMANDS AS A TEMPLATE
 // MAKE SURE WHEN YOU ARE ADDING COMMANDS YOU FOLLOW THE PATH AND ROUTINE THAT I HAVE LISTED BELOW.
   if(!message.guild.member(message.author).hasPermission('MANAGE_GUILD')) return message.channel.send(':heavy_multiplication_x:| **MISSING PERMISSIONS**');
-    message.channel.send(`:eight_pointed_black_star:| **Send Name channel For the Giveaway**`).then(msg => {
+    message.channel.send(`:eight_pointed_black_star:| **Tell me the channel name For the Giveaway**`).then(msg => {
       message.channel.awaitMessages(filter, {
         max: 1,
         time: 20000,
         errors: ['time']
       }).then(collected => {
         let room = message.guild.channels.find('name' , collected.first().content);
-        if(!room) return message.channel.send(':heavy_multiplication_x:| **i Found It :(**');
+        if(!room) return message.channel.send(':heavy_multiplication_x:| **I cannot find that channel, make sure you aren't mentioning it :(**');
         room = collected.first().content;
         collected.first().delete();
-        msg.channel.send(':eight_pointed_black_star:| **Time For The Giveaway**').then(msg => {
+        msg.edit(':eight_pointed_black_star:| **Time For The Giveaway** Tell me a duration in [Seconds -s, Minutes -m, or Hours - h]').then(msg => {
           message.channel.awaitMessages(filter, {
             max: 1,
             time: 20000,
@@ -91,13 +92,21 @@ if(message.content.startsWith(prefix + " start")) {
             if(!collected.first().content.match(/[1-60][s,m,h,d,w]/g)) return message.channel.send('**The Bot Not Support This Time**');
             duration = collected.first().content
             collected.first().delete();
+            msg.edit(':eight_pointed_black_star:| **Now tell me a Title for the Giveaway **').then(msg => {
+              message.channel.awaitMessages(filter, {
+                max: 1,
+                time: 20000,
+                errors: ['time']
+          }).then(collected => {
+            title = collected.first().content
+            collected.first().delete();
             msg.channel.send(':eight_pointed_black_star:| **Now send The Present **').then(msg => {
               message.channel.awaitMessages(filter, {
                 max: 1,
                 time: 20000,
                 errors: ['time']
               }).then(collected => {
-                title = collected.first().content;
+                present = collected.first().content;
                 collected.first().delete();
                 msg.delete();
                 message.delete();
@@ -117,7 +126,9 @@ if(message.content.startsWith(prefix + " start")) {
                        .addField('Giveaway Ended !🎉',`Winners : ${gFilter} \nEnded at :`)
                        .setTimestamp()
                      m.edit('** 🎉 GIVEAWAY ENDED 🎉**' , {embed: endEmbed});
-                    message.guild.channels.find("name" , room).send(`**Congratulations ${gFilter}! You won The \`${title}\`**` , {embed: {}})
+                    message.guild.channels.find("name" , room).send(`**Congratulations ${gFilter}! You won The \`${title}\` Check your DMs 👌**` , {embed: {}})
+                    gFilter.send(`**Congratulations! You won The \`${title}\` \`${present}\`**` , {embed: {}})
+                  
                 }, ms(duration));
             });
                 } catch(e) {
