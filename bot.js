@@ -101,7 +101,7 @@ var filter = m => m.author.id === message.author.id;
 if(message.content.startsWith(prefix + " start")) {
 // BELOW THIS LINE IS THE BOTS COMMANDS EDIT, REPLACE AND ADD TO THESE AS NEEDED IF YOU ARE WANTING TO EMBED THE COMMAND YOU CAN USE ONE OF THE BOTS PRE EXISTING COMMANDS AS A TEMPLATE
 // MAKE SURE WHEN YOU ARE ADDING COMMANDS YOU FOLLOW THE PATH AND ROUTINE THAT I HAVE LISTED BELOW.
-  if(!message.guild.member(message.author).hasPermission('MANAGE_GUILD')) return message.channel.send(perms);
+ // if(!message.guild.member(message.author).hasPermission('MANAGE_GUILD')) return message.channel.send(perms);
     message.channel.send(chanEmbed).then(msg => {
      msg.delete(5000);
       message.channel.awaitMessages(filter, {
