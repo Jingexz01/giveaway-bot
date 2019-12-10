@@ -75,7 +75,7 @@ var filter = m => m.author.id === message.author.id;
  perms.setDescription("I am missing the ``MANAGE_GUILD`` Permissions")
 
  chanEmbed.setTitle("Giveaway: Step 1")
- chanembed.setDescription("Tell me the name of the channel to host the Giveaway in")
+ chanEmbed.setDescription("Tell me the name of the channel to host the Giveaway in")
  chanEmbed.addField("Example", "```general-chat```")
 
  noChan.setTitle("Channel Doesnt Exist")
