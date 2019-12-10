@@ -129,9 +129,7 @@ if(command === ' start') {
         });
       });
     });
-  }
-});
-   
+  }   
 });
 
 // THE CLIENT LOGIN PROCESS (BOT READS THE TOKEN FROM HERE)
