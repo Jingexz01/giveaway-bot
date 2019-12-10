@@ -142,7 +142,7 @@ if(message.content.startsWith(prefix + " start")) {
       });
     });
   });
-};
+});
   
 //});
 
