@@ -80,7 +80,7 @@ if(message.content.startsWith(prefix + " start")) {
         errors: ['time']
       }).then(collected => {
         let room = message.guild.channels.find('name' , collected.first().content);
-        if(!room) return message.channel.send(':heavy_multiplication_x:| **I cannot find that channel, make sure you aren't mentioning it :(**');
+        if(!room) return message.channel.send(':heavy_multiplication_x:| **I cannot find that channel make sure you arent mentioning it**');
         room = collected.first().content;
         collected.first().delete();
         msg.edit(':eight_pointed_black_star:| **Time For The Giveaway** Tell me a duration in [Seconds -s, Minutes -m, or Hours - h]').then(msg => {
