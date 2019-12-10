@@ -93,7 +93,7 @@ if(message.content.startsWith(prefix + " start")) {
 // MAKE SURE WHEN YOU ARE ADDING COMMANDS YOU FOLLOW THE PATH AND ROUTINE THAT I HAVE LISTED BELOW.
   if(!message.guild.member(message.author).hasPermission('MANAGE_GUILD')) return message.channel.send(perms);
     message.channel.send(chanEmbed).then(msg => {
-     message.delete(10000)
+     msg.delete(5000);
       message.channel.awaitMessages(filter, {
         max: 1,
         time: 20000,
@@ -104,7 +104,7 @@ if(message.content.startsWith(prefix + " start")) {
         room = collected.first().content;
         collected.first().delete();
         msg.channel.send(gTime).then(msg => {
-         message.delete(10000)
+         msg.delete(5000);
           message.channel.awaitMessages(filter, {
             max: 1,
             time: 20000,
@@ -114,7 +114,7 @@ if(message.content.startsWith(prefix + " start")) {
             duration = collected.first().content
             collected.first().delete();
             msg.channel.send(':eight_pointed_black_star:| **Now tell me a Title for the Giveaway **').then(msg => {
-             message.delete(10000)
+             msg.delete(5000);
               message.channel.awaitMessages(filter, {
                 max: 1,
                 time: 20000,
@@ -123,7 +123,7 @@ if(message.content.startsWith(prefix + " start")) {
             title = collected.first().content
             collected.first().delete();
             msg.channel.send(':eight_pointed_black_star:| **Now send The Present **').then(msg => {
-             message.delete(10000)
+             msg.delete(5000);
               message.channel.awaitMessages(filter, {
                 max: 1,
                 time: 20000,
