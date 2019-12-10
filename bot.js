@@ -30,7 +30,7 @@ var token = process.env.BOT_TOKEN; // Replace "process.env.BOT_TOKE" with your b
 // YOU CAN CHANGE, DELETE OR EDIT THIS AS YOU WOULD LIKE BUT IT DOES GIVE THE BOT A NICE CLEAN LOOK 
 client.on("ready", () => {
   console.log("Giveaways | Logged in! Server count: ${client.guilds.size}");
-  client.user.setGame(`Giveaways | -g start`, `https://www.twitch.tv/monstercat`);
+  client.user.setGame(`🎉 -g help 🎉`, `https://www.twitch.tv/monstercat`);
 });
 
 client.on('message',async message => {
@@ -175,7 +175,7 @@ if(message.content.startsWith(prefix + " start")) {
                 }, ms(duration));
             });
                 } catch(e) {
-                message.channel.send(`:heavy_multiplication_x:| **i Don't Have Prem**`);
+                message.channel.send(`:heavy_multiplication_x:| **i Don't Have Permissions**`);
                   console.log(e);
                 }
               });
@@ -203,10 +203,20 @@ client.on("message", (message) => {
  
 if(message.content.startsWith(prefix + " invite")) {
 const invite = new Discord.RichEmbed()
-    invite.setTitle("Bot Invite")
+    invite.setTitle("🎉 Bot Invite 🎉")
     invite.setDescription("Invite me to your server here")
     invite.addField("Invite Link", "[Click Here](https://discordapp.com/api/oauth2/authorize?client_id=653755293943201793&permissions=2147483127&scope=bot)")
-    message.channel.send(invite);
+  message.channel.send(invite);
+  }
+
+if(message.content.startsWith(prefix + " help")) {
+const help = new Discord.RichEmbed()
+    help.setTitle("🎉 Custom Giveaways 🎉")
+    help.setDescription("Here is a list of my Commands")
+    help.addField("-g help", "Shows this help message")
+    help.addField("-g start", "Starts a Giveaway")
+    help.addField("-g invite", "Generates a Invite link")
+  message.channel.send(invite);
   }
 })
 
