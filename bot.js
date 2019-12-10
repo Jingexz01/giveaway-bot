@@ -101,9 +101,8 @@ var filter = m => m.author.id === message.author.id;
 if(message.content.startsWith(prefix + " start")) {
 // BELOW THIS LINE IS THE BOTS COMMANDS EDIT, REPLACE AND ADD TO THESE AS NEEDED IF YOU ARE WANTING TO EMBED THE COMMAND YOU CAN USE ONE OF THE BOTS PRE EXISTING COMMANDS AS A TEMPLATE
 // MAKE SURE WHEN YOU ARE ADDING COMMANDS YOU FOLLOW THE PATH AND ROUTINE THAT I HAVE LISTED BELOW.
- // if(!message.guild.member(message.author).hasPermission('MANAGE_GUILD')) return message.channel.send(perms);
-    message.channel.send(chanEmbed).then(msg => {
-     msg.delete(5000);
+ // if(!message.guild.member(message.author).hasPermission('MANAGE_GUILD')) return message.channel.send(noPerms);
+    message.channel.send("**Step 1:** Tell me the name of the channel to host the Giveaway in").then(msg => {
       message.channel.awaitMessages(filter, {
         max: 1,
         time: 20000,
@@ -113,8 +112,7 @@ if(message.content.startsWith(prefix + " start")) {
         if(!room) return message.channel.send(noChan);
         room = collected.first().content;
         collected.first().delete();
-        msg.channel.send(gTime).then(msg => {
-         msg.delete(5000);
+        msg.edit("**Step 2:** Tell me a Duration for the Giveaway in Minutes, Seconds or Hours ``[Example 10m - 10 Minutes]``").then(msg => {
           message.channel.awaitMessages(filter, {
             max: 1,
             time: 20000,
@@ -123,8 +121,7 @@ if(message.content.startsWith(prefix + " start")) {
             if(!collected.first().content.match(/[1-60][s,m,h,d,w]/g)) return message.channel.send('**The Duration provided was not a valid Number**');
             duration = collected.first().content
             collected.first().delete();
-            msg.channel.send(titleEmbed).then(msg => {
-             msg.delete(5000);
+            msg.edit("**Step 3:** What is the title? ``[Example: Steam Code Giveaway]``").then(msg => {
               message.channel.awaitMessages(filter, {
                 max: 1,
                 time: 20000,
@@ -132,8 +129,7 @@ if(message.content.startsWith(prefix + " start")) {
           }).then(collected => {
             title = collected.first().content
             collected.first().delete();
-            msg.channel.send(presentEmbed).then(msg => {
-             msg.delete(5000);
+            msg.edit("**Step 4:** What are you Giving Away? ``[Example: Steam Code {Code Here}]``").then(msg => {
               message.channel.awaitMessages(filter, {
                 max: 1,
                 time: 20000,
