@@ -2,7 +2,12 @@
 // THESE ARE REQUIRED TO HELP THE BOT FUNCTION PROPERLY.
 const Discord = require("discord.js");
 const PREFIX = process.env.PREFIX;
+const embedColor = require ('./config');
 const client = new Discord.Client();
+const perms = new Discord.RichEmbed()
+const noChan = new Discord.RichEmbed()
+
+
 
 // BELOW THIS LINE IS THE CLEAN FUNCTION DO NOT TOUCH THIS UNLESS YOU KNOW WHAT YOU ARE DOING!!!
 // FUNCTIONS ARE REQUIRED TO EXECUTE ARGS AND STRINGS 
@@ -17,7 +22,6 @@ function clean(text) {
 // MAKE SURE YOU ENTER THE CORRECT INFORMATION PROVIDING THE WRONG DISCORD ID COULD GIVE SOMEONE ELSE ACCESS TO THE BOTS OWNER ONLY COMMANDS (OWNER ONLY COMMANDS COMING SOON)
 var prefix = process.env.PREFIX; // Replace "process.env.PREFIX" with prefix of your choice if self hosting (Not Auto Deployed) Currrnt Prefix: (`tb/`) make sure you include the "(``)"
 var token = process.env.BOT_TOKEN; // Replace "process.env.BOT_TOKE" with your bot token if self hosting (Not Auto Deployed) Example: (`Nakdndyak13816akd.odb`) make sure you include the "(``)"
-var embedColor = require('./config');
 
 // BELOW THIS LINE IS THE BOTS CONSOLE LOG READY MESSAGE, PLAY STATUS (NOW STREAMING) AND THE MESSAGE THAT IS SENT WHEN INVITED TO A NEW SERVER!!!
 // YOU CAN CHANGE, DELETE OR EDIT THIS AS YOU WOULD LIKE BUT IT DOES GIVE THE BOT A NICE CLEAN LOOK 
@@ -66,6 +70,9 @@ var filter = m => m.author.id === message.author.id;
   const args = message.content.slice(prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
 
+ perms.setTitle("MISSING PERMISSIONS")
+ perms.setColor(embedColor)
+ perms.setDescription("I am missing the ``MANAGE_GUILD`` Permissions")
 
   if (message.author.bot) return;
 //if(command === ' start') {
