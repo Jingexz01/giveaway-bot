@@ -153,7 +153,7 @@ if(message.content.startsWith(prefix + " start")) {
                        let users = m.reactions.get("🎉").users
                        let list = users.array().filter(u => u.id !== m.author.id !== client.user.id);
                        if (list === message.author.id) return message.channel.send("Couldn't determine a winner please try again")
-                       if (list === client.user.id return message.channel.send("Couldn't determine a winner please try again")
+                       if (list === client.user.id) return message.channel.send("Couldn't determine a winner please try again")
                        let gFilter = list[Math.floor(Math.random() * list.length) + 0]
                        let endEmbed = new Discord.RichEmbed()
                        .setAuthor(message.author.username, message.author.avatarURL)
