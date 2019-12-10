@@ -6,7 +6,8 @@ const embedColor = require ('./config');
 const client = new Discord.Client();
 const perms = new Discord.RichEmbed()
 const noChan = new Discord.RichEmbed()
-
+const chanEmbed = new Discord.RichEmbed()
+const gTime = new Discord.RichEmbed()
 
 
 // BELOW THIS LINE IS THE CLEAN FUNCTION DO NOT TOUCH THIS UNLESS YOU KNOW WHAT YOU ARE DOING!!!
@@ -71,26 +72,39 @@ var filter = m => m.author.id === message.author.id;
   const command = args.shift().toLowerCase();
 
  perms.setTitle("MISSING PERMISSIONS")
- perms.setColor(embedColor)
  perms.setDescription("I am missing the ``MANAGE_GUILD`` Permissions")
+
+ chanEmbed.setTitle("Giveaway: Step 1")
+ chanembed.setDescription("Tell me the name of the channel to host the Giveaway in")
+ chanEmbed.addField("Example", "```general-chat```")
+
+ noChan.setTitle("Channel Doesnt Exist")
+ noChan.setDescription("Sorry, I couldnt find that channel make sure you arent tagging the channel")
+ 
+ gTime.setTitle("Giveaway: Step 2")
+ gTime.setDescription("Please tell me a Duration for the Giveaway in Minutes, Seconds or Hours")
+ gTime.addField("Example", "```10m - 10 Minutes```")
+
 
   if (message.author.bot) return;
 //if(command === ' start') {
 if(message.content.startsWith(prefix + " start")) {
 // BELOW THIS LINE IS THE BOTS COMMANDS EDIT, REPLACE AND ADD TO THESE AS NEEDED IF YOU ARE WANTING TO EMBED THE COMMAND YOU CAN USE ONE OF THE BOTS PRE EXISTING COMMANDS AS A TEMPLATE
 // MAKE SURE WHEN YOU ARE ADDING COMMANDS YOU FOLLOW THE PATH AND ROUTINE THAT I HAVE LISTED BELOW.
-  if(!message.guild.member(message.author).hasPermission('MANAGE_GUILD')) return message.channel.send(':heavy_multiplication_x:| **MISSING PERMISSIONS**');
-    message.channel.send(`:eight_pointed_black_star:| **Tell me the channel name For the Giveaway**`).then(msg => {
+  if(!message.guild.member(message.author).hasPermission('MANAGE_GUILD')) return message.channel.send(perms);
+    message.channel.send(chanEmbed).then(msg => {
+     message.delete(10000)
       message.channel.awaitMessages(filter, {
         max: 1,
         time: 20000,
         errors: ['time']
       }).then(collected => {
         let room = message.guild.channels.find('name' , collected.first().content);
-        if(!room) return message.channel.send(':heavy_multiplication_x:| **I cannot find that channel make sure you arent mentioning it**');
+        if(!room) return message.channel.send(noChan);
         room = collected.first().content;
         collected.first().delete();
-        msg.edit(':eight_pointed_black_star:| **Time For The Giveaway** Tell me a duration in [Seconds -s, Minutes -m, or Hours - h]').then(msg => {
+        msg.channel.send(gTime).then(msg => {
+         message.delete(10000)
           message.channel.awaitMessages(filter, {
             max: 1,
             time: 20000,
@@ -99,7 +113,8 @@ if(message.content.startsWith(prefix + " start")) {
             if(!collected.first().content.match(/[1-60][s,m,h,d,w]/g)) return message.channel.send('**The Bot Not Support This Time**');
             duration = collected.first().content
             collected.first().delete();
-            msg.edit(':eight_pointed_black_star:| **Now tell me a Title for the Giveaway **').then(msg => {
+            msg.channel.send(':eight_pointed_black_star:| **Now tell me a Title for the Giveaway **').then(msg => {
+             message.delete(10000)
               message.channel.awaitMessages(filter, {
                 max: 1,
                 time: 20000,
@@ -107,7 +122,8 @@ if(message.content.startsWith(prefix + " start")) {
           }).then(collected => {
             title = collected.first().content
             collected.first().delete();
-            msg.edit(':eight_pointed_black_star:| **Now send The Present **').then(msg => {
+            msg.channel.send(':eight_pointed_black_star:| **Now send The Present **').then(msg => {
+             message.delete(10000)
               message.channel.awaitMessages(filter, {
                 max: 1,
                 time: 20000,
@@ -133,8 +149,18 @@ if(message.content.startsWith(prefix + " start")) {
                        .addField('Giveaway Ended !🎉',`Winners : ${gFilter} \nEnded at : ${hours}:${minutes}:${seconds} ${suffix}`)
                        .setTimestamp()
                      m.edit('** 🎉 GIVEAWAY ENDED 🎉**' , {embed: endEmbed});
-                    message.guild.channels.find("name" , room).send(`**Congratulations ${gFilter}! You won The \`${title}\` Check your DMs 👌**` , {embed: {}})
-                    gFilter.send(`**Congratulations! You won The \`${title}\` Info: \`${present}\`**` , {embed: {}})
+
+                   let winEmbed = new Discord.RichEmbed()
+                       winEmbed.setTitle("🎉 CONGRATULATIONS 🎉")
+                       winEmbed.setDescription(`${gFilter} You won The \`${title}\` Giveaway`)
+                       
+                    let dmEmbed = new Discord.RichEmbed()
+                        dmEmbed.setTitle("🎉 CONGRATULATIONS 🎉")
+                        dmEmbed.setDescription(`You won The \`${title}\` Giveaway`)
+                        dmEmbed.addField("Prize", "``${present}``")
+
+                    message.guild.channels.find("name" , room).send(winEmbed)
+                    gFilter.send(dmEmbed)
                   
                 }, ms(duration));
             });
