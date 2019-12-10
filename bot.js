@@ -201,8 +201,8 @@ client.on("message", (message) => {
   const args = message.content.slice(prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
  
-if (command === " invite") {
- const invite = new Discord.RichEmbed()
+if(message.content.startsWith(prefix + " invite")) {
+const invite = new Discord.RichEmbed()
     invite.setTitle("Bot Invite")
     invite.setDescription("Invite me to your server here")
     invite.addField("Invite Link", "[Click Here](https://discordapp.com/api/oauth2/authorize?client_id=653755293943201793&permissions=2147483127&scope=bot)")
