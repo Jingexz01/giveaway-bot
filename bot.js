@@ -216,7 +216,7 @@ const help = new Discord.RichEmbed()
     help.addField("-g help", "Shows this help message")
     help.addField("-g start", "Starts a Giveaway")
     help.addField("-g invite", "Generates a Invite link")
-  message.channel.send(invite);
+  message.channel.send(help);
   }
 })
 
