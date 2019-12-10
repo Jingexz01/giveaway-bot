@@ -52,10 +52,25 @@ if (hours == 0) {
 hours = 12;
 }
  
-  var filter = m => m.author.id === message.author.id;
-  if(message.content.startsWith(prefix + " start")) {
- 
-    if(!message.guild.member(message.author).hasPermission('MANAGE_GUILD')) return message.channel.send(':heavy_multiplication_x:| **يجب أن يكون لديك خاصية التعديل على السيرفر**');
+var filter = m => m.author.id === message.author.id;
+  
+// Also good practice to ignore any message that does not start with our prefix, 
+  // which is set in the configuration file.
+  if(message.content.indexOf(prefix) !== 0) return;
+  
+  // Here we separate our "command" name, and our "arguments" for the command. 
+  // e.g. if we have the message "+say Is this the real life?" , we'll get the following:
+  // command = say
+  // args = ["Is", "this", "the", "real", "life?"]
+  const args = message.content.slice(prefix.length).trim().split(/ +/g);
+  const command = args.shift().toLowerCase();
+
+
+  if (message.author.bot) return;
+if(command === ' start') {
+// BELOW THIS LINE IS THE BOTS COMMANDS EDIT, REPLACE AND ADD TO THESE AS NEEDED IF YOU ARE WANTING TO EMBED THE COMMAND YOU CAN USE ONE OF THE BOTS PRE EXISTING COMMANDS AS A TEMPLATE
+// MAKE SURE WHEN YOU ARE ADDING COMMANDS YOU FOLLOW THE PATH AND ROUTINE THAT I HAVE LISTED BELOW.
+  if(!message.guild.member(message.author).hasPermission('MANAGE_GUILD')) return message.channel.send(':heavy_multiplication_x:| **يجب أن يكون لديك خاصية التعديل على السيرفر**');
     message.channel.send(`:eight_pointed_black_star:| **Send Name channel For the Giveaway**`).then(msg => {
       message.channel.awaitMessages(filter, {
         max: 1,
@@ -116,65 +131,6 @@ hours = 12;
     });
   }
 });
-
-client.on("message", (message) => {
-
-// Also good practice to ignore any message that does not start with our prefix, 
-  // which is set in the configuration file.
-  if(message.content.indexOf(prefix) !== 0) return;
-  
-  // Here we separate our "command" name, and our "arguments" for the command. 
-  // e.g. if we have the message "+say Is this the real life?" , we'll get the following:
-  // command = say
-  // args = ["Is", "this", "the", "real", "life?"]
-  const args = message.content.slice(prefix.length).trim().split(/ +/g);
-  const command = args.shift().toLowerCase();
-
-
-  if (message.guild.id !== serverStats.guildID) return;
-  if (message.author.bot) return;
-
-// BELOW THIS LINE IS THE BOTS COMMANDS EDIT, REPLACE AND ADD TO THESE AS NEEDED IF YOU ARE WANTING TO EMBED THE COMMAND YOU CAN USE ONE OF THE BOTS PRE EXISTING COMMANDS AS A TEMPLATE
-// MAKE SURE WHEN YOU ARE ADDING COMMANDS YOU FOLLOW THE PATH AND ROUTINE THAT I HAVE LISTED BELOW.
-  if (message.content.toLowerCase().startsWith(prefix + `invite`)){
-
-  let error = new Discord.RichEmbed()
-      .setColor("0xff0000")
-      .setTitle(":no_entry: Error :no_entry:")
-      .setDescription(`<@${message.author.id}>` + " Please open a ticket before running this command");
-      message.delete().catch();
-
-let myRole = message.guild.roles.get("648354653091790862");
- 
-if (!message.channel.name.startsWith(`ticket-`)) return message.channel.send(error);
-
-if(message.member.roles.has(myRole.id)) {
-    const embed = new Discord.RichEmbed()
-    .setTitle(`Ninja Gen Invite`)
-    .setColor(0x00AE86)
-    .setDescription(`Redistributing this link without permission will result in a Blacklist from the bot`)
-    .addField(`Ninja Gen`, `[Invite Link Here](https://discordapp.com/api/oauth2/authorize?client_id=648267102528077824&permissions=2147483127&scope=bot)`)
-    .setFooter(`Ninja Gen Protection`, `https://cdn.discordapp.com/avatars/648267102528077824/abb9723ce26116219804047f4979a6cf.png?size=2048?size=1024`)
-    .setThumbnail(`https://cdn.discordapp.com/avatars/648267102528077824/abb9723ce26116219804047f4979a6cf.png?size=2048?size=1024`)
-    message.delete().catch();
-    message.channel.send({ embed: embed });
-  } else { 
-    return message.channel.send("Please wait for a Staff Member")
-    }
-  }
-
-if (command === "say") {
-    message.delete().catch()
-    // makes the bot say something and delete the message. As an example, it's open to anyone to use. 
-    // To get the "message" itself we join the `args` back into a string with spaces: 
-    const sayMessage = args.join(" ");
-    // Then we delete the command message (sneaky, right?). The catch just ignores the error with a cute smiley thing.
-    // And we get the bot to say the thing: 
-    const sayEmbed = new Discord.RichEmbed()
-    sayEmbed.setColor("#FF00FF")
-    sayEmbed.setDescription(`${sayMessage}`)
-    message.channel.send(sayEmbed);
-  }
    
 });
 
