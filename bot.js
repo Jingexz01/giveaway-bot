@@ -78,22 +78,22 @@ var filter = m => m.author.id === message.author.id;
 
  chanEmbed.setTitle("Giveaway: Step 1")
  chanEmbed.setDescription("Tell me the name of the channel to host the Giveaway in")
- chanEmbed.addField("Example", "```general-chat```")
+ chanEmbed.addField("Example", "```general-chat```");
 
  noChan.setTitle("Channel Doesnt Exist")
  noChan.setDescription("Sorry, I couldnt find that channel make sure you arent tagging the channel")
  
  gTime.setTitle("Giveaway: Step 2")
  gTime.setDescription("Please tell me a Duration for the Giveaway in Minutes, Seconds or Hours")
- gTime.addField("Example", "```10m - 10 Minutes```")
+ gTime.addField("Example", "```10m - 10 Minutes```");
 
  titleEmbed.setTitle("Giveaway: Step 3")
  titleEmbed.setDescription("Please tell me a Title for the Giveaway")
- titleEmbed.addField("Example", "``Steam Giveaway``")
+ titleEmbed.addField("Example", "``Steam Giveaway``");
 
  presentEmbed.setTitle("Giveaway: Step 4")
  presentEmbed.setDescription("Please tell me What you are Giving away ")
- presentEmbed.addField("Example", "``Steam Code: {Code Here}``")
+ presentEmbed.addField("Example", "``Steam Code: {Code Here}``");
 
 
   if (message.author.bot) return;
@@ -151,7 +151,8 @@ if(message.content.startsWith(prefix + " start")) {
                      let re = m.react('🎉');
                      setTimeout(() => {
                        let users = m.reactions.get("🎉").users
-                       let list = users.array().filter(u => u.id !== m.author.id !== client.user.id);
+                       let list = collected.first().content;
+                      // let list = users.array().filter(u => u.id !== m.author.id !== client.user.id);
                        let gFilter = list[Math.floor(Math.random() * list.length) + 0]
                        let endEmbed = new Discord.RichEmbed()
                        .setAuthor(message.author.username, message.author.avatarURL)
