@@ -8,6 +8,8 @@ const perms = new Discord.RichEmbed()
 const noChan = new Discord.RichEmbed()
 const chanEmbed = new Discord.RichEmbed()
 const gTime = new Discord.RichEmbed()
+const presentEmbed = new Discord.RichEmbed()
+const titleEmbed = new Discord.RichEmbed()
 
 
 // BELOW THIS LINE IS THE CLEAN FUNCTION DO NOT TOUCH THIS UNLESS YOU KNOW WHAT YOU ARE DOING!!!
@@ -85,6 +87,14 @@ var filter = m => m.author.id === message.author.id;
  gTime.setDescription("Please tell me a Duration for the Giveaway in Minutes, Seconds or Hours")
  gTime.addField("Example", "```10m - 10 Minutes```")
 
+ titleEmbed.setTitle("Giveaway: Step 3")
+ titleEmbed.setDescription("Please tell me a Title for the Giveaway")
+ titleEmbed.addField("Example", "``Steam Giveaway``")
+
+ presentEmbed.setTitle("Giveaway: Step 4")
+ presentEmbed.setDescription("Please tell me What you are Giving away ")
+ presentEmbed.addField("Example", "``Steam Code: {Code Here}``")
+
 
   if (message.author.bot) return;
 //if(command === ' start') {
@@ -110,10 +120,10 @@ if(message.content.startsWith(prefix + " start")) {
             time: 20000,
             errors: ['time']
           }).then(collected => {
-            if(!collected.first().content.match(/[1-60][s,m,h,d,w]/g)) return message.channel.send('**The Bot Not Support This Time**');
+            if(!collected.first().content.match(/[1-60][s,m,h,d,w]/g)) return message.channel.send('**The Duration provided was not a valid Number**');
             duration = collected.first().content
             collected.first().delete();
-            msg.channel.send(':eight_pointed_black_star:| **Now tell me a Title for the Giveaway **').then(msg => {
+            msg.channel.send(titleEmbed).then(msg => {
              msg.delete(5000);
               message.channel.awaitMessages(filter, {
                 max: 1,
@@ -122,7 +132,7 @@ if(message.content.startsWith(prefix + " start")) {
           }).then(collected => {
             title = collected.first().content
             collected.first().delete();
-            msg.channel.send(':eight_pointed_black_star:| **Now send The Present **').then(msg => {
+            msg.channel.send(presentEmbed).then(msg => {
              msg.delete(5000);
               message.channel.awaitMessages(filter, {
                 max: 1,
@@ -157,7 +167,7 @@ if(message.content.startsWith(prefix + " start")) {
                     let dmEmbed = new Discord.RichEmbed()
                         dmEmbed.setTitle("🎉 CONGRATULATIONS 🎉")
                         dmEmbed.setDescription(`You won The \`${title}\` Giveaway`)
-                        dmEmbed.addField("Prize", "``${present}``")
+                        dmEmbed.addField("Prize", "``" + `${present}` + "``")
 
                     message.guild.channels.find("name" , room).send(winEmbed)
                     gFilter.send(dmEmbed)
