@@ -2,10 +2,8 @@
   "name": "Chizuru Mizuhara Discord Bot",
   "description": "the Discord bot for super cool support ticket stuff and more! Using discord.js Library",
   "logo": "https://cdn.discordapp.com/attachments/586095704057970708/587949134632321034/imageedit_1_8018298797.png",
-  "repository": "https://github.com/GrimDesignsFiveM/The-Watchers-Ticket-Bot",
-  "website": "https://the-watchers.webnode.com/",
-  "stack": "heroku-20", 
-  "success_url": "/welcome",
+  "repository": "https://github.com/Jingexz01/giveaway-bot",
+  "stack": "heroku-20",
   "buildpacks": [
     {
       "url": "heroku/nodejs"
@@ -14,12 +12,14 @@
   "env": {
     "BOT_TOKEN": {
       "description": "A Secret Bot Token, Used To Login The BOT. Get The Token In Your App Settings.",
-      "required": true
+      "required": true,
+      "value": ""
     },
     "PREFIX": {
       "description": "A Prefix To Run Your Bot Commands.",
-      "required": true
-    }
-  },
+      "required": true,
+      "value": ""
+      }
+    },
   "keywords": ["node", "heroku", "discord"]
 }
