@@ -54,9 +54,11 @@ Below you'll find a list of all commands that ツ Ticket Bot ツ has, along with
 | Host | Method |
 | ------- |:----------------- |
 | Heroku | Auto Deploy |
-**THE AUTO DEPLOY OPTION IS COMING SOON, PLEASE CHECK BACK LATER.**
+Deploy the app to [Heroku](https://heroku.com)
 
-> {TIP} For information on how to self host please contact us on our [support server](https://discord.gg/djpPhcU)
+[![Deploy to heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/Jingexz01/giveaway-bot/tree/master)
+
+> {TIP} For information on how to self host please contact us on our [support server](https://jingexz01.gq/discord-server)
 
 > {TIP} You can host your own version of `ツ Ticket Bot ツ` on Heroku, just click this `Automatic Deploy`
 
